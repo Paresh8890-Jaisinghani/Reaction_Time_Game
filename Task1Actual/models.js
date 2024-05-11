@@ -1,12 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
+const scoreSchema = new mongoose.Schema({
+    ReactionTimeScore: { type: Number, required: true },
+});
 
-const ReactionSchema = new mongoose.Schema({
-    score : String
-})
+const Score = mongoose.model('Score', scoreSchema);
 
-
-
-const Reactionmodel = mongoose.model("main",ReactionSchema)
-
-module.exports = Reactionmodel
+module.exports = Score;

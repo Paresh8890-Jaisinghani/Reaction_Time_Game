@@ -57,8 +57,7 @@ mainMenu.addEventListener("click", () => {
   mainMenu.classList.remove("active");
   startGame();
 });
-
-const endGame = () => {
+const endGame = async () => {
   audio2.pause();
   audio3.pause();
   endScreen.classList.add("active");
@@ -75,18 +74,21 @@ const endGame = () => {
   score2.innerHTML = `Score 2: ${scores[1]} ms`;
   score3.innerHTML = `Score 3: ${scores[2]} ms`;
   average.innerHTML = `Average: ${((scores[0]+scores[1]+scores[2])/3).toFixed(0)} ms`;
-  fetch('http://127.0.0.1:5500/Task1Actual/index.html', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ averageScore })
 
-  })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-};
+  try {
+    await fetch('http://localhost:3000/api/scores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ReactionTimeScore: averageScore})
+    });
+    console.log('Score saved successfully');
+  } catch (err) {
+    console.error('Error saving score:', err.message);
+  }
+ 
+}
 
 const displayReactionTime = (rt) => {
   clickableArea.style.backgroundColor = "#faf0ca";
@@ -97,7 +99,7 @@ const displayReactionTime = (rt) => {
   audio2.pause();
   audio3.pause();
 
-  if (scores.length >= 1) {
+  if (scores.length >= 3) {
     endGame()
   }
 };

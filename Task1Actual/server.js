@@ -1,29 +1,48 @@
-const mongoose = require('mongoose')
-const express = require('express')
+const express = require('express');
+const mongoose = require('mongoose');
+const Score = require('./models.js');
 const cors = require('cors')
-const Reactionmodel = require('./models.js')
+
+const app = express();
+app.use(cors());
+const PORT = process.env.PORT || 3000;
 
 
-const app = express()
-app.use(express.json())
-app.use(cors())
-
-
-try{
-    mongoose.connect('mongodb://localhost:27017/test')  
-}catch(err){
-    console.log('Found error' + err)
-}
-
-
-app.post('',(req,res)=>{
-Reactionmodel.create(req.body).then(score=>{
-        res.json(score)
+mongoose.connect('mongodb://localhost:27017/test', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
-.catch(err=>res.json(err));
+.then(() => {
+    console.log("Connected to MongoDB");
+})
+.catch((err) => {
+    console.error("Error connecting to MongoDB:", err.message);
 });
 
-app.listen(3001,()=>{
-    console.log("Server Running")
-})
+app.use(express.json());
 
+app.post('/api/scores', async (req, res) => {
+    const ReactionTimeScore  = req.body;
+
+    try {
+        const newScore = new Score(ReactionTimeScore);
+        await newScore.save();
+        res.status(201).json(newScore);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+app.get('/api/scores', async (req, res) => {
+    try {
+        const scores = await Score.find();
+        res.json(scores);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
