@@ -71,24 +71,21 @@ const endGame = () => {
   });
 
   let averageScore = Math.round(total / scores.length);
-  //   const sendFinalScore = (averageScore) => {
-  //     sendScoreToServer(averageScore);
-  // };
-  // reactionTimeText.innerHTML = `${averageScore} ms`;
   score1.innerHTML = `Score 1: ${scores[0]} ms`;
   score2.innerHTML = `Score 2: ${scores[1]} ms`;
   score3.innerHTML = `Score 3: ${scores[2]} ms`;
   average.innerHTML = `Average: ${((scores[0]+scores[1]+scores[2])/3).toFixed(0)} ms`;
-  fetch('http://127.0.0.1:5503/index.html', {
+  fetch('http://127.0.0.1:5500/Task1Actual/index.html', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ averageScore })
+
   })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
 };
 
 const displayReactionTime = (rt) => {
@@ -100,8 +97,8 @@ const displayReactionTime = (rt) => {
   audio2.pause();
   audio3.pause();
 
-  if (scores.length >= 3) {
-    endGame();
+  if (scores.length >= 1) {
+    endGame()
   }
 };
 
