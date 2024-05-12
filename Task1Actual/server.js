@@ -22,10 +22,10 @@ mongoose.connect('mongodb://localhost:27017/test', {
 app.use(express.json());
 
 app.post('/api/scores', async (req, res) => {
-    const ReactionTimeScore  = req.body;
-
+    const ReactionTimeScore  = req.body
+    const phonenumber = req.body
     try {
-        const newScore = new Score(ReactionTimeScore);
+        const newScore = new Score({ReactionTimeScore,phonenumber});
         await newScore.save();
         res.status(201).json(newScore);
     } catch (err) {

@@ -12,17 +12,22 @@ const sec = document.querySelector(".sec");
 
 const audio2 = new Audio('audio2.mp3');
 const audio3 = new Audio('audio3.mp3');
+let phonenumber
 
 loginform.addEventListener("submit",function(event){
-  event.preventDefault();
-  
-  var phonenumber = number.value;
-  console.log(phonenumber)
+  event.preventDefault()
+   var temp = number.value;
+   phonenumber = temp.toString();
+   console.log(phonenumber)
   sec.style.display = "none"
   clickableArea.style.display = "grid"
   mainMenu.classList.add("active")
   alert("You are logged in successfully.")
 })
+
+async function getPhoneNumberFromUser() {
+  return phonenumber;
+}
 
 
 const reactionTimeText = document.querySelector(
@@ -92,12 +97,17 @@ const endGame = async () => {
   average.innerHTML = `Average: ${((scores[0]+scores[1]+scores[2])/3).toFixed(0)} ms`;
 
   try {
+  const phonenumber = await getPhoneNumberFromUser();
     await fetch('http://localhost:3000/api/scores', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ReactionTimeScore: averageScore})
+      body: JSON.stringify({
+        ReactionTimeScore: averageScore,
+        phonenumber : phonenumber
+      })
+
     });
     console.log('Score saved successfully');
   } catch (err) {
@@ -115,7 +125,7 @@ const displayReactionTime = (rt) => {
   audio2.pause();
   audio3.pause();
 
-  if (scores.length >= 3) {
+  if (scores.length >=3) {
     endGame()
   }
 };
