@@ -6,8 +6,24 @@ const score1 = document.getElementById("score1");
 const score2 = document.getElementById("score2");
 const score3 = document.getElementById("score3");
 const average = document.getElementById("average");
+const loginform  = document.getElementById("loginform");
+const number = document.getElementById("number");
+const sec = document.querySelector(".sec");
+
 const audio2 = new Audio('audio2.mp3');
 const audio3 = new Audio('audio3.mp3');
+
+loginform.addEventListener("submit",function(event){
+  event.preventDefault();
+  
+  var phonenumber = number.value;
+  console.log(phonenumber)
+  sec.style.display = "none"
+  clickableArea.style.display = "grid"
+  mainMenu.classList.add("active")
+  alert("You are logged in successfully.")
+})
+
 
 const reactionTimeText = document.querySelector(
   ".end-screen .reaction-time-text"
