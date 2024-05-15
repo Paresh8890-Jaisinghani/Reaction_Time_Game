@@ -104,7 +104,9 @@ const endGame = async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        ReactionTimeScore: averageScore,
+        ReactionTimeScore1: scores[0],
+        ReactionTimeScore2: scores[1],
+        ReactionTimeScore3: scores[2],
         phonenumber : phonenumber
       })
 
@@ -156,4 +158,4 @@ clickableArea.addEventListener("click", () => {
   if (waitingForGreen) {
     displayTooSoon();
   }
-});
+}); 
