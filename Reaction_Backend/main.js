@@ -14,16 +14,42 @@ const audio2 = new Audio('audio2.mp3');
 const audio3 = new Audio('audio3.mp3');
 let phonenumber
 
-loginform.addEventListener("submit",function(event){
-  event.preventDefault()
-   var temp = number.value;
-   phonenumber = temp.toString();
-   console.log(phonenumber)
-  sec.style.display = "none"
-  clickableArea.style.display = "grid"
-  mainMenu.classList.add("active")
-  alert("You are logged in successfully.")
-})
+loginform.addEventListener("submit", async function(event){
+  event.preventDefault();
+  const temp = number.value;
+  phonenumber = temp.toString();
+  console.log(phonenumber);
+
+  try {
+      const response = await fetch('http://localhost:3000/api/scores', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              ReactionTimeScore1: 0,
+              ReactionTimeScore2: 0,
+              ReactionTimeScore3: 0,
+              phonenumber: phonenumber
+          })
+      });
+
+      if (response.status === 404) {
+          alert("Wrong code Entered, Please try again.");
+          location.reload();
+          return;
+      }
+
+      sec.style.display = "none";
+      clickableArea.style.display = "grid";
+      mainMenu.classList.add("active");
+      alert("You are logged in successfully.");
+  } catch (err) {
+      console.error('Error logging in:', err.message);
+      alert("An error occurred. Please try again.");
+  }
+});
+
 
 async function getPhoneNumberFromUser() {
   return phonenumber;
@@ -97,26 +123,24 @@ const endGame = async () => {
   average.innerHTML = `Average: ${((scores[0]+scores[1]+scores[2])/3).toFixed(0)} ms`;
 
   try {
-  const phonenumber = await getPhoneNumberFromUser();
-    await fetch('http://localhost:3000/api/scores', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ReactionTimeScore1: scores[0],
-        ReactionTimeScore2: scores[1],
-        ReactionTimeScore3: scores[2],
-        phonenumber : phonenumber
-      })
-
+    const phonenumber = await getPhoneNumberFromUser();
+    const response = await fetch('http://localhost:3000/api/scores', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ReactionTimeScore1: scores[0],
+            ReactionTimeScore2: scores[1],
+            ReactionTimeScore3: scores[2],
+            phonenumber: phonenumber
+        })
     });
-    console.log('Score saved successfully');
-  } catch (err) {
+        console.log('Score saved successfully');
+} catch (err) {
     console.error('Error saving score:', err.message);
-  }
- 
 }
+};
 
 const displayReactionTime = (rt) => {
   clickableArea.style.backgroundColor = "#faf0ca";
