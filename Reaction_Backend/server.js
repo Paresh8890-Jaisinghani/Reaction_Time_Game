@@ -22,10 +22,10 @@ mongoose.connect('mongodb+srv://Paresh:pareshjaisinghani@cluster0.rxwg4ag.mongod
 app.use(express.json());
 
 app.post('/api/scores', async (req, res) => {
-    const { ReactionTimeScore1, ReactionTimeScore2, ReactionTimeScore3, phonenumber } = req.body;
+    const { ReactionTimeScore1, ReactionTimeScore2, ReactionTimeScore3, otpcode } = req.body;
     try {
         // Check if the phone number exists in the database
-        let contact = await Contact.findOne({ number: phonenumber });
+        let contact = await Contact.findOne({ code: otpcode });
 
         if (!contact) {
             // If the phone number doesn't exist, send a specific response

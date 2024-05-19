@@ -7,18 +7,18 @@ const score2 = document.getElementById("score2");
 const score3 = document.getElementById("score3");
 const average = document.getElementById("average");
 const loginform  = document.getElementById("loginform");
-const number = document.getElementById("number");
+const number = document.getElementById("otp");
 const sec = document.querySelector(".sec");
 
 const audio2 = new Audio('audio2.mp3');
 const audio3 = new Audio('audio3.mp3');
-let phonenumber
+let otp
 
 loginform.addEventListener("submit", async function(event){
   event.preventDefault();
   const temp = number.value;
-  phonenumber = temp.toString();
-  console.log(phonenumber);
+  otp = temp.toString();
+  console.log(otp);
 
   try {
       const response = await fetch('http://localhost:3000/api/scores', {
@@ -30,7 +30,7 @@ loginform.addEventListener("submit", async function(event){
               ReactionTimeScore1: 0,
               ReactionTimeScore2: 0,
               ReactionTimeScore3: 0,
-              phonenumber: phonenumber
+              otpcode: otp
           })
       });
 
@@ -52,7 +52,7 @@ loginform.addEventListener("submit", async function(event){
 
 
 async function getPhoneNumberFromUser() {
-  return phonenumber;
+  return otp;
 }
 
 
@@ -123,7 +123,7 @@ const endGame = async () => {
   average.innerHTML = `Average: ${((scores[0]+scores[1]+scores[2])/3).toFixed(0)} ms`;
 
   try {
-    const phonenumber = await getPhoneNumberFromUser();
+    const otp = await getPhoneNumberFromUser();
     const response = await fetch('http://localhost:3000/api/scores', {
         method: 'POST',
         headers: {
@@ -133,7 +133,7 @@ const endGame = async () => {
             ReactionTimeScore1: scores[0],
             ReactionTimeScore2: scores[1],
             ReactionTimeScore3: scores[2],
-            phonenumber: phonenumber
+            otpcode: otp
         })
     });
         console.log('Score saved successfully');
