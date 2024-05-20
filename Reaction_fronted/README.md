@@ -7,4 +7,4 @@
 6.Trying to save score of user whose phone number is already present in the database
 7.Change Mongoose connection string from local to details page connection string of final website
 8.Fetch OTP from login page and check this otp is already saved in database or not, If saved then allow user to play the game otherwise show alert
-9.OTP is sent to the user to his email id
+9.OTP is sent to the user to his email id during detials page
