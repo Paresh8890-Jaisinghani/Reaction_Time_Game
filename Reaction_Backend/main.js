@@ -9,10 +9,27 @@ const average = document.getElementById("average");
 const loginform  = document.getElementById("loginform");
 const number = document.getElementById("otp");
 const sec = document.querySelector(".sec");
+const btn = document.querySelector(".play-again-btn")
+
+
 
 const audio2 = new Audio('audio2.mp3');
 const audio3 = new Audio('audio3.mp3');
 let otp
+
+
+let isNavigatingAway = false; // Flag to track if the user clicked the "Next" button
+
+// Function to warn the user before reloading or leaving the page
+function warnUserBeforeReload(event) {
+    if (!isNavigatingAway) {
+        const confirmationMessage = "If you reload the page, your score will be deleted.";
+        (event || window.event).returnValue = confirmationMessage; // Standard for most browsers
+        return confirmationMessage; // Required for some older browsers
+    }
+}
+
+
 
 loginform.addEventListener("submit", async function(event){
   event.preventDefault();
@@ -44,6 +61,8 @@ loginform.addEventListener("submit", async function(event){
       clickableArea.style.display = "grid";
       mainMenu.classList.add("active");
       alert("You are logged in successfully.");
+      window.addEventListener("beforeunload", warnUserBeforeReload);
+
   } catch (err) {
       console.error('Error logging in:', err.message);
       alert("An error occurred. Please try again.");
@@ -104,10 +123,20 @@ mainMenu.addEventListener("click", () => {
   mainMenu.classList.remove("active");
   startGame();
 });
+
+function navigateToNext() {
+  isNavigatingAway = true;
+  
+  window.location.href = "http://localhost:3002/quiz"; // Replace with the actual URL of the next page
+  
+}
+
+
 const endGame = async () => {
   audio2.pause();
   audio3.pause();
   endScreen.classList.add("active");
+  btn.addEventListener("click",navigateToNext);
   clearTimeout(timer);
 
   let total = 0;
