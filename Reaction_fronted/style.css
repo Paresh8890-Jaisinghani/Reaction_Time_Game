@@ -91,6 +91,11 @@ body {
   color: white;
 }
 
+#average{
+  margin-top: 20px;
+  font-weight: 700;
+}
+
 
 
 /* Form Style */
