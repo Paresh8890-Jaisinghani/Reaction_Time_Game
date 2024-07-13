@@ -146,9 +146,9 @@ const endGame = async () => {
   });
 
   let averageScore = Math.round(total / scores.length);
-  score1.innerHTML = `Score 1: ${scores[0]} ms`;
-  score2.innerHTML = `Score 2: ${scores[1]} ms`;
-  score3.innerHTML = `Score 3: ${scores[2]} ms`;
+  score1.innerHTML += ` ${scores[0]} ms`;
+  score2.innerHTML += ` ${scores[1]} ms`;
+  score3.innerHTML += ` ${scores[2]} ms`;
   average.innerHTML = `Average: ${((scores[0]+scores[1]+scores[2])/3).toFixed(0)} ms`;
 
   try {

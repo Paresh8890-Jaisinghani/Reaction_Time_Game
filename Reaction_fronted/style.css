@@ -88,6 +88,9 @@ body {
 .res{
   border-radius: 20px;
   font-size: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+  
   color: white;
 }
 
@@ -210,3 +213,9 @@ input{
 }
 
 
+.clickable-area .message{
+  text-align: center;
+  padding: 20px;
+  font-weight: 700;
+  font-size: 45px;
+}
