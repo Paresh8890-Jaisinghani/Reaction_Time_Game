@@ -109,7 +109,7 @@ const startGame = () => {
   if(scores.length == 1) audio2.play();
   if(scores.length == 2) audio3.play();
   clickableArea.style.backgroundColor = "#c1121f";
-  message.innerHTML = "Wait for the Green Color.";
+  message.innerHTML = "Wait for the Green Color";
   message.style.color = "#fff";
 
   let randomNumber = Math.floor(Math.random() * 4000 + 3000);
@@ -173,7 +173,7 @@ const endGame = async () => {
 
 const displayReactionTime = (rt) => {
   clickableArea.style.backgroundColor = "#faf0ca";
-  message.innerHTML = `<div class='reaction-time-text'>${rt} ms</div>Click to continue.`;
+  message.innerHTML = `<div class='reaction-time-text'>${rt} ms</div>Click to continue`;
   greenDisplayed = false;
   waitingForStart = true;
   scores.push(rt);
