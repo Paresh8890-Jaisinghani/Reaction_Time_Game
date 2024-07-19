@@ -131,6 +131,10 @@ function navigateToNext() {
   
 }
 
+const padWithLeadingZeros = (number, length) => {
+  return number.toString().padStart(length, '0');
+}
+
 
 const endGame = async () => {
   audio2.pause();
@@ -146,9 +150,9 @@ const endGame = async () => {
   });
 
   let averageScore = Math.round(total / scores.length);
-  score1.innerHTML += ` ${scores[0]} ms`;
-  score2.innerHTML += ` ${scores[1]} ms`;
-  score3.innerHTML += ` ${scores[2]} ms`;
+  score1.innerHTML += ` ${padWithLeadingZeros(scores[0], 4)} ms`;
+  score2.innerHTML += ` ${padWithLeadingZeros(scores[1], 4)} ms`;
+  score3.innerHTML += ` ${padWithLeadingZeros(scores[2], 4)} ms`;
   average.innerHTML = `Average: ${((scores[0]+scores[1]+scores[2])/3).toFixed(0)} ms`;
 
   try {
